@@ -8,6 +8,10 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            margin: 0;
+            padding: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
         #flag {
             width: 200px;
@@ -26,10 +30,24 @@
         }
         #intro {
             display: block; /* Show the intro image initially */
+            margin-top: 50px;
         }
         #intro img {
             width: 250px; /* Set the intro image width to 250px */
             height: auto; /* Maintain aspect ratio */
+        }
+        /* Responsive adjustments for mobile */
+        @media (max-width: 600px) {
+            #flag {
+                width: 150px; /* Adjust flag size for smaller screens */
+                height: 75px;
+            }
+            #intro img {
+                width: 200px; /* Adjust intro image size for smaller screens */
+            }
+            #timer, #score, #feedback {
+                font-size: 16px; /* Adjust font sizes for smaller screens */
+            }
         }
     </style>
 </head>
