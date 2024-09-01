@@ -5,6 +5,8 @@ let timerInterval;
 let timeLeft = 10;
 
 function startGame() {
+    document.getElementById('intro').style.display = 'none'; // Hide the intro image and button
+    document.getElementById('flag').style.display = 'block'; // Show the flag image
     document.getElementById('background-music').play();
     loadFlag();
     timeLeft = 10;
