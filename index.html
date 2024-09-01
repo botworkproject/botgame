@@ -5,23 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flag Trivia Game</title>
     <style>
-        /* Your CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #flag {
+            width: 200px;
+            height: 100px;
+        }
+        #feedback {
+            font-size: 18px;
+            color: red;
+        }
+        #score {
+            font-size: 24px;
+        }
+        #timer {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
     <h1>Flag Trivia Game</h1>
-    <div id="game">
-        <button id="startButton">Start Game</button>
-        <div id="flagContainer">
-            <img id="flag" src="" alt="Flag">
-        </div>
+    <img id="flag" src="" alt="Flag">
+    <div id="timer">Time Left: 10s</div>
+    <div>
         <input type="text" id="answer" placeholder="Enter country name">
-        <button onclick="submitAnswer()">Submit Answer</button>
-        <div id="feedback"></div>
-        <div id="score">Score: 0</div>
-        <div id="timer">10</div>
+        <button onclick="checkAnswer()">Submit Answer</button>
     </div>
-    <audio id="backgroundMusic" src="music.mp3" preload="auto"></audio>
+    <div id="feedback"></div>
+    <div id="score">Score: 0</div>
+    <button onclick="startGame()">Start Game</button>
+    <audio id="background-music" src="music.mp3"></audio>
     <script src="script.js"></script>
 </body>
 </html>
