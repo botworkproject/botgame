@@ -12,6 +12,7 @@
         #flag {
             width: 200px;
             height: 100px;
+            display: none; /* Hide the flag initially */
         }
         #feedback {
             font-size: 18px;
@@ -23,10 +24,17 @@
         #timer {
             font-size: 18px;
         }
+        #intro {
+            display: block; /* Show the intro image initially */
+        }
     </style>
 </head>
 <body>
-    <h1>Flag Trivia Game</h1>
+    <div id="intro">
+        <img src="flaggame.jpg" alt="Flag Game Intro">
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
     <img id="flag" src="" alt="Flag">
     <div id="timer">Time Left: 10s</div>
     <div>
@@ -35,7 +43,6 @@
     </div>
     <div id="feedback"></div>
     <div id="score">Score: 0</div>
-    <button onclick="startGame()">Start Game</button>
     <audio id="background-music" src="music.mp3"></audio>
     <script src="script.js"></script>
 </body>
