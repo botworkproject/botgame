@@ -1,79 +1,60 @@
 let flags = [];
-let score = 0;
 let currentFlag = null;
-let timer;
+let score = 0;
+let timerInterval;
 let timeLeft = 10;
-let audio = document.getElementById('backgroundMusic');
-let startButton = document.getElementById('startButton');
 
 function startGame() {
-    startButton.style.display = 'none'; // Hide the start button
+    document.getElementById('background-music').play();
     loadFlag();
-    startTimer();
-    playMusic();
+    timeLeft = 10;
+    document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('background-music').pause();
+            document.getElementById('feedback').innerText = `Time's up! The correct answer was ${currentFlag.name}.`;
+            document.getElementById('feedback').style.color = 'red';
+        }
+    }, 1000);
 }
 
 function loadFlag() {
+    fetch('countries.json')
+        .then(response => response.json())
+        .then(data => {
+            flags = Object.entries(data).map(([code, name]) => ({
+                src: `png250px/${code.toLowerCase()}.png`,
+                name: name.toLowerCase()
+            }));
+            showRandomFlag();
+        })
+        .catch(error => console.error('Error loading flag data:', error));
+}
+
+function showRandomFlag() {
     const randomIndex = Math.floor(Math.random() * flags.length);
     currentFlag = flags[randomIndex];
     document.getElementById('flag').src = currentFlag.src;
     document.getElementById('feedback').innerText = '';
 }
 
-function startTimer() {
-    timeLeft = 10;
-    document.getElementById('timer').innerText = timeLeft;
-    timer = setInterval(() => {
-        timeLeft -= 1;
-        document.getElementById('timer').innerText = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            checkAnswer('');
-        }
-    }, 1000);
-}
-
-function playMusic() {
-    audio.play();
-    audio.volume = 0.5; // Set volume level
-    audio.playbackRate = 0.5; // Slow playback
-}
-
-function stopMusic() {
-    audio.pause();
-    audio.currentTime = 0; // Reset playback position
-}
-
-function submitAnswer() {
-    clearInterval(timer);
-    const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-    checkAnswer(userAnswer);
-}
-
-function checkAnswer(userAnswer) {
+function checkAnswer() {
+    const userAnswer = document.getElementById('answer').value.toLowerCase();
     if (userAnswer === currentFlag.name) {
         score += 50;
-        document.getElementById('feedback').innerText = 'Correct! +50 points';
+        document.getElementById('feedback').innerText = 'Correct!';
+        document.getElementById('feedback').style.color = 'green';
+        document.getElementById('score').innerText = `Score: ${score}`;
+        clearInterval(timerInterval);
+        document.getElementById('background-music').pause();
+        loadFlag();
     } else {
-        document.getElementById('feedback').innerText = `Wrong! The correct answer was ${currentFlag.name.charAt(0).toUpperCase() + currentFlag.name.slice(1)}`;
+        document.getElementById('feedback').innerText = `Incorrect. The correct answer was ${currentFlag.name}.`;
+        document.getElementById('feedback').style.color = 'red';
     }
-    document.getElementById('score').innerText = `Score: ${score}`;
-    setTimeout(() => {
-        stopMusic();
-        startButton.style.display = 'block'; // Show the start button again
-    }, 2000); // Wait 2 seconds before showing the start button
 }
-
-// Attach event listener to start button
-startButton.addEventListener('click', startGame);
-
-// Load flag data from JSON file
-fetch('countries.json')
-    .then(response => response.json())
-    .then(data => {
-        flags = Object.entries(data).map(([code, name]) => ({
-            src: `png250px/${code}.png`,
-            name: name.toLowerCase()
-        }));
-    })
-    .catch(error => console.error('Error loading flag data:', error));
