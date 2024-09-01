@@ -3,23 +3,14 @@ let score = 0;
 let currentFlag = null;
 let timer;
 let timeLeft = 10;
-
-// Load flag data from JSON file
-fetch('countries.json')
-    .then(response => response.json())
-    .then(data => {
-        // Convert JSON data to flag objects
-        flags = Object.entries(data).map(([code, name]) => ({
-            src: `png250px/${code}.png`,
-            name: name.toLowerCase() // Convert country names to lowercase
-        }));
-        startGame();
-    })
-    .catch(error => console.error('Error loading flag data:', error));
+let audio = document.getElementById('backgroundMusic');
+let startButton = document.getElementById('startButton');
 
 function startGame() {
+    startButton.style.display = 'none'; // Hide the start button
     loadFlag();
     startTimer();
+    playMusic();
 }
 
 function loadFlag() {
@@ -42,6 +33,17 @@ function startTimer() {
     }, 1000);
 }
 
+function playMusic() {
+    audio.play();
+    audio.volume = 0.5; // Set volume level
+    audio.playbackRate = 0.5; // Slow playback
+}
+
+function stopMusic() {
+    audio.pause();
+    audio.currentTime = 0; // Reset playback position
+}
+
 function submitAnswer() {
     clearInterval(timer);
     const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
@@ -56,5 +58,22 @@ function checkAnswer(userAnswer) {
         document.getElementById('feedback').innerText = `Wrong! The correct answer was ${currentFlag.name.charAt(0).toUpperCase() + currentFlag.name.slice(1)}`;
     }
     document.getElementById('score').innerText = `Score: ${score}`;
-    setTimeout(startGame, 2000); // Wait 2 seconds before loading the next flag
+    setTimeout(() => {
+        stopMusic();
+        startButton.style.display = 'block'; // Show the start button again
+    }, 2000); // Wait 2 seconds before showing the start button
 }
+
+// Attach event listener to start button
+startButton.addEventListener('click', startGame);
+
+// Load flag data from JSON file
+fetch('countries.json')
+    .then(response => response.json())
+    .then(data => {
+        flags = Object.entries(data).map(([code, name]) => ({
+            src: `png250px/${code}.png`,
+            name: name.toLowerCase()
+        }));
+    })
+    .catch(error => console.error('Error loading flag data:', error));
