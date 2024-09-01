@@ -11,7 +11,7 @@ fetch('countries.json')
         // Convert JSON data to flag objects
         flags = Object.entries(data).map(([code, name]) => ({
             src: `png250px/${code}.png`,
-            name: name
+            name: name.toLowerCase() // Convert country names to lowercase
         }));
         startGame();
     })
@@ -44,16 +44,16 @@ function startTimer() {
 
 function submitAnswer() {
     clearInterval(timer);
-    const userAnswer = document.getElementById('answer').value.trim();
+    const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
     checkAnswer(userAnswer);
 }
 
 function checkAnswer(userAnswer) {
-    if (userAnswer.toLowerCase() === currentFlag.name.toLowerCase()) {
+    if (userAnswer === currentFlag.name) {
         score += 50;
         document.getElementById('feedback').innerText = 'Correct! +50 points';
     } else {
-        document.getElementById('feedback').innerText = `Wrong! The correct answer was ${currentFlag.name}`;
+        document.getElementById('feedback').innerText = `Wrong! The correct answer was ${currentFlag.name.charAt(0).toUpperCase() + currentFlag.name.slice(1)}`;
     }
     document.getElementById('score').innerText = `Score: ${score}`;
     setTimeout(startGame, 2000); // Wait 2 seconds before loading the next flag
