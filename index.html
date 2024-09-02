@@ -4,25 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flag Trivia Game</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="main/favicon.ico" type="image/x-icon">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="container">
-        <div id="intro">
-            <img src="images/flaggame.jpg" alt="Start Game" id="intro-image">
-            <button id="start-button" onclick="startGame()">Start Game</button>
-        </div>
-
-        <div id="game" style="display:none;">
-            <img id="flag" src="" alt="Flag">
-            <div id="score">Score: 0</div>
-            <div id="timer">Time Left: 10s</div>
-            <input type="text" id="answer" placeholder="Enter country name">
-            <button id="submit-button" onclick="checkAnswer()">Submit Answer</button>
-            <div id="feedback"></div>
+    <div id="game-container">
+        <img src="flaggame.jpg" alt="Flag Game" id="start-image">
+        <button id="start-button">Start Game</button>
+        <div id="game" class="hidden">
+            <img id="flag" src="" alt="Country Flag">
+            <input type="text" id="answer" placeholder="Enter the country name">
+            <button id="submit-answer">Submit Answer</button>
+            <p id="timer">Time left: <span id="time-left">10</span>s</p>
+            <p id="score">Score: <span id="current-score">0</span></p>
         </div>
     </div>
-    <audio id="background-music" src="music.wav"></audio>
-    <script src="script.js"></script>
+    <audio id="background-music" src="music.mp3"></audio>
 </body>
 </html>
