@@ -20,14 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add more countries as needed
     };
 
-    // Debugging: Ensure elements are selected properly
-    console.log("Start Button:", startButton);
-    console.log("Game Container:", gameContainer);
-    console.log("Start Image:", startImage);
-    console.log("Background Music:", backgroundMusic);
-    console.log("Flag Element:", flagElement);
-    console.log("Option Buttons:", optionButtons);
-
     startButton.addEventListener("click", function() {
         console.log("Start Button Clicked");
         startButton.style.display = "none";
@@ -53,8 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
         currentCountry = countryCodes[randomIndex];
         flagElement.src = `png250px/${currentCountry}.png`;
 
-        if (!flagElement.src) {
+        console.log("Loaded Flag:", flagElement.src);
+
+        if (!flagElement.src || !flagElement.src.includes(currentCountry)) {
             console.error("Flag image not found for country code:", currentCountry);
+        } else {
+            console.log("Flag image loaded successfully:", currentCountry);
         }
 
         // Generate options
@@ -70,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
         optionButtons.forEach((button, index) => {
             button.textContent = options[index];
             button.style.display = "block"; // Ensure buttons are visible
+            console.log(`Option ${index + 1}:`, options[index]);
         });
     }
 
@@ -89,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function checkAnswer(event) {
         const userAnswer = event.target.textContent;
+        console.log("User Answer:", userAnswer);
         if (userAnswer === countries[currentCountry]) {
             score += 50;
             scoreElement.textContent = score;
