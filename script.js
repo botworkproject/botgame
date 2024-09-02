@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const startImage = document.getElementById("start-image");
     const backgroundMusic = document.getElementById("background-music");
     const flagElement = document.getElementById("flag");
-    const answerInput = document.getElementById("answer");
-    const submitButton = document.getElementById("submit-answer");
+    const optionButtons = document.querySelectorAll(".option-button");
     const timerElement = document.getElementById("time-left");
     const scoreElement = document.getElementById("current-score");
 
@@ -28,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
         startGame();
     });
 
-    submitButton.addEventListener("click", checkAnswer);
+    optionButtons.forEach(button => {
+        button.addEventListener("click", checkAnswer);
+    });
 
     function startGame() {
         backgroundMusic.play();
@@ -41,7 +42,20 @@ document.addEventListener("DOMContentLoaded", function() {
         const randomIndex = Math.floor(Math.random() * countryCodes.length);
         currentCountry = countryCodes[randomIndex];
         flagElement.src = `png250px/${currentCountry}.png`;
-        answerInput.value = '';
+
+        // Generate options
+        const correctAnswer = countries[currentCountry];
+        const options = [correctAnswer];
+        while (options.length < 4) {
+            const randomOption = countries[countryCodes[Math.floor(Math.random() * countryCodes.length)]];
+            if (!options.includes(randomOption)) {
+                options.push(randomOption);
+            }
+        }
+        shuffleArray(options);
+        optionButtons.forEach((button, index) => {
+            button.textContent = options[index];
+        });
     }
 
     function startTimer() {
@@ -57,9 +71,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 1000);
     }
 
-    function checkAnswer() {
-        const userAnswer = answerInput.value.trim().toLowerCase();
-        if (userAnswer === countries[currentCountry].toLowerCase()) {
+    function checkAnswer(event) {
+        const userAnswer = event.target.textContent;
+        if (userAnswer === countries[currentCountry]) {
             score += 50;
             scoreElement.textContent = score;
             loadNewFlag();
@@ -75,5 +89,12 @@ document.addEventListener("DOMContentLoaded", function() {
         backgroundMusic.currentTime = 0;
         alert("Game over! Your score is " + score);
         location.reload();
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 });
