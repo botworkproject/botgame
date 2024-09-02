@@ -20,7 +20,16 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add more countries as needed
     };
 
+    // Debugging: Ensure elements are selected properly
+    console.log("Start Button:", startButton);
+    console.log("Game Container:", gameContainer);
+    console.log("Start Image:", startImage);
+    console.log("Background Music:", backgroundMusic);
+    console.log("Flag Element:", flagElement);
+    console.log("Option Buttons:", optionButtons);
+
     startButton.addEventListener("click", function() {
+        console.log("Start Button Clicked");
         startButton.style.display = "none";
         startImage.style.display = "none";
         gameContainer.classList.remove("hidden");
@@ -32,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function startGame() {
+        console.log("Game Started");
         backgroundMusic.play();
         loadNewFlag();
         startTimer();
@@ -64,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function startTimer() {
+        console.log("Timer Started");
         timeLeft = 10;
         timerElement.textContent = timeLeft;
         timer = setInterval(function() {
