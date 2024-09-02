@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", function() {
         currentCountry = countryCodes[randomIndex];
         flagElement.src = `png250px/${currentCountry}.png`;
 
+        if (!flagElement.src) {
+            console.error("Flag image not found for country code:", currentCountry);
+        }
+
         // Generate options
         const correctAnswer = countries[currentCountry];
         const options = [correctAnswer];
@@ -55,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         shuffleArray(options);
         optionButtons.forEach((button, index) => {
             button.textContent = options[index];
+            button.style.display = "block"; // Ensure buttons are visible
         });
     }
 
