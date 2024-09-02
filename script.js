@@ -39,36 +39,37 @@ document.addEventListener("DOMContentLoaded", function() {
         startTimer();
     }
 
-    function loadNewFlag() {
-        const countryCodes = Object.keys(countries);
-        const randomIndex = Math.floor(Math.random() * countryCodes.length);
-        currentCountry = countryCodes[randomIndex];
-        flagElement.src = `png250px/${currentCountry}.png`;
+   function loadNewFlag() {
+    const countryCodes = Object.keys(countries);
+    const randomIndex = Math.floor(Math.random() * countryCodes.length);
+    currentCountry = countryCodes[randomIndex];
+    flagElement.src = `png250px/${currentCountry}.png`;
 
-        console.log("Loaded Flag:", flagElement.src);
+    console.log("Loaded Flag:", flagElement.src);
 
-        if (!flagElement.src || !flagElement.src.includes(currentCountry)) {
-            console.error("Flag image not found for country code:", currentCountry);
-        } else {
-            console.log("Flag image loaded successfully:", currentCountry);
-        }
-
-        // Generate options
-        const correctAnswer = countries[currentCountry];
-        const options = [correctAnswer];
-        while (options.length < 4) {
-            const randomOption = countries[countryCodes[Math.floor(Math.random() * countryCodes.length)]];
-            if (!options.includes(randomOption)) {
-                options.push(randomOption);
-            }
-        }
-        shuffleArray(options);
-        optionButtons.forEach((button, index) => {
-            button.textContent = options[index];
-            button.style.display = "block"; // Ensure buttons are visible
-            console.log(`Option ${index + 1}:`, options[index]);
-        });
+    if (!flagElement.src || !flagElement.src.includes(currentCountry)) {
+        console.error("Flag image not found for country code:", currentCountry);
+    } else {
+        console.log("Flag image loaded successfully:", currentCountry);
     }
+
+    // Generate options
+    const correctAnswer = countries[currentCountry];
+    const options = [correctAnswer];
+    while (options.length < 4) {
+        const randomOption = countries[countryCodes[Math.floor(Math.random() * countryCodes.length)]];
+        if (!options.includes(randomOption)) {
+            options.push(randomOption);
+        }
+    }
+    shuffleArray(options);
+    optionButtons.forEach((button, index) => {
+        button.textContent = options[index];
+        button.style.display = "inline-block"; // Ensure buttons are visible
+        console.log(`Option ${index + 1}:`, options[index]);
+    });
+}
+
 
     function startTimer() {
         console.log("Timer Started");
