@@ -1,62 +1,79 @@
-let flags = [];
-let currentFlag = null;
-let score = 0;
-let timerInterval;
-let timeLeft = 10;
+document.addEventListener("DOMContentLoaded", function() {
+    const startButton = document.getElementById("start-button");
+    const gameContainer = document.getElementById("game");
+    const startImage = document.getElementById("start-image");
+    const backgroundMusic = document.getElementById("background-music");
+    const flagElement = document.getElementById("flag");
+    const answerInput = document.getElementById("answer");
+    const submitButton = document.getElementById("submit-answer");
+    const timerElement = document.getElementById("time-left");
+    const scoreElement = document.getElementById("current-score");
 
-function startGame() {
-    document.getElementById('intro').style.display = 'none'; // Hide the intro image and button
-    document.getElementById('flag').style.display = 'block'; // Show the flag image
-    document.getElementById('background-music').play();
-    loadFlag();
-    timeLeft = 10;
-    document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+    let currentCountry = '';
+    let score = 0;
+    let timeLeft = 10;
+    let timer;
 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timer').innerText = `Time Left: ${timeLeft}s`;
+    const countries = {
+        "ad": "Andorra",
+        "ae": "United Arab Emirates",
+        "af": "Afghanistan",
+        // Add more countries as needed
+    };
 
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById('background-music').pause();
-            document.getElementById('feedback').innerText = `Time's up! The correct answer was ${currentFlag.name}.`;
-            document.getElementById('feedback').style.color = 'red';
-        }
-    }, 1000);
-}
+    startButton.addEventListener("click", function() {
+        startButton.style.display = "none";
+        startImage.style.display = "none";
+        gameContainer.classList.remove("hidden");
+        startGame();
+    });
 
-function loadFlag() {
-    fetch('countries.json')
-        .then(response => response.json())
-        .then(data => {
-            flags = Object.entries(data).map(([code, name]) => ({
-                src: `png250px/${code.toLowerCase()}.png`,
-                name: name.toLowerCase()
-            }));
-            showRandomFlag();
-        })
-        .catch(error => console.error('Error loading flag data:', error));
-}
+    submitButton.addEventListener("click", checkAnswer);
 
-function showRandomFlag() {
-    const randomIndex = Math.floor(Math.random() * flags.length);
-    currentFlag = flags[randomIndex];
-    document.getElementById('flag').src = currentFlag.src;
-    document.getElementById('feedback').innerText = '';
-}
-
-function checkAnswer() {
-    const userAnswer = document.getElementById('answer').value.toLowerCase();
-    if (userAnswer === currentFlag.name) {
-        score += 50;
-        document.getElementById('feedback').innerText = 'Correct!';
-        document.getElementById('feedback').style.color = 'green';
-        document.getElementById('score').innerText = `Score: ${score}`;
-        clearInterval(timerInterval);
-        document.getElementById('background-music').pause();
-        loadFlag();
-    } else {
-        document.getElementById('feedback').innerText = `Incorrect. The correct answer was ${currentFlag.name}.`;
-        document.getElementById('feedback').style.color = 'red';
+    function startGame() {
+        backgroundMusic.play();
+        loadNewFlag();
+        startTimer();
     }
-}
+
+    function loadNewFlag() {
+        const countryCodes = Object.keys(countries);
+        const randomIndex = Math.floor(Math.random() * countryCodes.length);
+        currentCountry = countryCodes[randomIndex];
+        flagElement.src = `png250px/${currentCountry}.png`;
+        answerInput.value = '';
+    }
+
+    function startTimer() {
+        timeLeft = 10;
+        timerElement.textContent = timeLeft;
+        timer = setInterval(function() {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                endGame();
+            }
+        }, 1000);
+    }
+
+    function checkAnswer() {
+        const userAnswer = answerInput.value.trim().toLowerCase();
+        if (userAnswer === countries[currentCountry].toLowerCase()) {
+            score += 50;
+            scoreElement.textContent = score;
+            loadNewFlag();
+            clearInterval(timer);
+            startTimer();
+        } else {
+            endGame();
+        }
+    }
+
+    function endGame() {
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+        alert("Game over! Your score is " + score);
+        location.reload();
+    }
+});
