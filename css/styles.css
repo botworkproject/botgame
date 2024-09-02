@@ -10,6 +10,14 @@ body {
     height: 100vh;
 }
 
+body {
+    background-image: url('/background.jpg');
+    background-size: cover; /* Adjust the size as needed */
+    background-position: center center; /* Center the background image */
+    background-attachment: fixed; /* Keeps the background image fixed during scrolling */
+}
+
+
 #container {
     text-align: center;
     color: #fff;
