@@ -4,67 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flag Trivia Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background: url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        #flag {
-            width: 200px;
-            height: 100px;
-            display: none; /* Hide the flag initially */
-        }
-        #feedback {
-            font-size: 18px;
-            color: red;
-        }
-        #score {
-            font-size: 24px;
-        }
-        #timer {
-            font-size: 18px;
-        }
-        #intro {
-            display: block; /* Show the intro image initially */
-            margin-top: 50px;
-        }
-        #intro img {
-            width: 250px; /* Set the intro image width to 250px */
-            height: auto; /* Maintain aspect ratio */
-        }
-        /* Responsive adjustments for mobile */
-        @media (max-width: 600px) {
-            #flag {
-                width: 150px; /* Adjust flag size for smaller screens */
-                height: 75px;
-            }
-            #intro img {
-                width: 200px; /* Adjust intro image size for smaller screens */
-            }
-            #timer, #score, #feedback {
-                font-size: 16px; /* Adjust font sizes for smaller screens */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="intro">
-        <img src="flaggame.jpg" alt="Flag Game Intro">
-        <button onclick="startGame()">Start Game</button>
-    </div>
+    <div id="container">
+        <div id="intro">
+            <img src="flaggame.jpg" alt="Start Game" id="intro-image">
+            <button id="start-button" onclick="startGame()">Start Game</button>
+        </div>
 
-    <img id="flag" src="" alt="Flag">
-    <div id="timer">Time Left: 10s</div>
-    <div>
-        <input type="text" id="answer" placeholder="Enter country name">
-        <button onclick="checkAnswer()">Submit Answer</button>
+        <div id="game" style="display:none;">
+            <img id="flag" src="" alt="Flag">
+            <div id="score">Score: 0</div>
+            <div id="timer">Time Left: 10s</div>
+            <input type="text" id="answer" placeholder="Enter country name">
+            <button id="submit-button" onclick="checkAnswer()">Submit Answer</button>
+            <div id="feedback"></div>
+        </div>
     </div>
-    <div id="feedback"></div>
-    <div id="score">Score: 0</div>
     <audio id="background-music" src="music.mp3"></audio>
     <script src="script.js"></script>
 </body>
