@@ -1,47 +1,56 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const startButton = document.getElementById("start-button");
-    const gameGrid = document.getElementById("game-grid");
-    const backgroundMusic = document.getElementById("background-music");
-    const successSound = document.getElementById("success-sound");
-    const keyElement = document.querySelector('.key');
-    
-    startButton.addEventListener("click", function() {
-        startButton.style.display = "none";
-        gameGrid.classList.remove("hidden");
-        startGame();
+document.addEventListener('DOMContentLoaded', () => {
+    const key = document.getElementById('key');
+    const blocks = document.querySelectorAll('.draggable');
+    const target = document.getElementById('target');
+    const grid = document.getElementById('grid');
+    const resetButton = document.getElementById('reset-button');
+
+    let activeBlock = null;
+    let offsetX, offsetY;
+
+    blocks.forEach(block => {
+        block.addEventListener('mousedown', (e) => {
+            activeBlock = block;
+            offsetX = e.clientX - block.getBoundingClientRect().left;
+            offsetY = e.clientY - block.getBoundingClientRect().top;
+            document.addEventListener('mousemove', moveBlock);
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', moveBlock);
+                activeBlock = null;
+            });
+        });
     });
 
-    function startGame() {
-        backgroundMusic.play();
-        // Initialize the game grid and blocks
-        initializeGrid();
-    }
-
-    function initializeGrid() {
-        // Logic to initialize grid with blocks
-        // You will need to add logic to handle the movements of blocks and key
-    }
-
-    function moveKey(direction) {
-        // Logic to move the key horizontally
-        // Check if the move is valid and update the key's position
-    }
-
-    function moveBlock(block, direction) {
-        // Logic to move the blocks
-        // Ensure blocks move within the grid and don't overlap
-    }
-
-    // Add event listeners for key movements
-    document.addEventListener('keydown', function(event) {
-        switch(event.key) {
-            case 'ArrowLeft':
-                moveKey('left');
-                break;
-            case 'ArrowRight':
-                moveKey('right');
-                break;
-            // Add cases for other keys if needed
+    function moveBlock(e) {
+        if (activeBlock) {
+            const x = e.clientX - offsetX - grid.getBoundingClientRect().left;
+            const y = e.clientY - offsetY - grid.getBoundingClientRect().top;
+            activeBlock.style.left = `${Math.max(0, Math.min(x, grid.clientWidth - activeBlock.clientWidth))}px`;
+            activeBlock.style.top = `${Math.max(0, Math.min(y, grid.clientHeight - activeBlock.clientHeight))}px`;
         }
+    }
+
+    resetButton.addEventListener('click', () => {
+        // Reset positions of the key and blocks
+        key.style.left = '0px';
+        key.style.top = '0px';
+        blocks.forEach(block => {
+            block.style.left = '';
+            block.style.top = '';
+        });
     });
+
+    // Check if the key reaches the target
+    function checkWin() {
+        const keyRect = key.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        if (keyRect.left < targetRect.right &&
+            keyRect.right > targetRect.left &&
+            keyRect.top < targetRect.bottom &&
+            keyRect.bottom > targetRect.top) {
+            alert('You win!');
+        }
+    }
+
+    document.addEventListener('mouseup', checkWin);
 });
