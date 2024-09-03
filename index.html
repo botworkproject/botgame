@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Trivia Game</title>
+    <title>Key Game</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="main/favicon.ico" type="image/x-icon">
-    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="game-container">
-        <img src="images/flaggame.jpg" alt="Flag Game" id="start-image">
+        <h1>Key Game</h1>
         <button id="start-button">Start Game</button>
         <div id="game" class="hidden">
-            <img id="flag" src="" alt="Country Flag">
-            <div id="options">
-                <button class="option-button">Option 1</button>
-                <button class="option-button">Option 2</button>
-                <button class="option-button">Option 3</button>
-                <button class="option-button">Option 4</button>
+            <div id="key-lock-area">
+                <img id="key" src="images/key.png" alt="Key" draggable="true">
+                <img id="lock" src="images/lock.png" alt="Lock">
             </div>
-            <p id="timer">Time left: <span id="time-left">10</span>s</p>
             <p id="score">Score: <span id="current-score">0</span></p>
+            <p id="timer">Time left: <span id="time-left">30</span>s</p>
         </div>
     </div>
     <audio id="background-music" src="music.mp3"></audio>
+    <audio id="success-sound" src="success.wav"></audio>
 </body>
 </html>
