@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("start-button");
+    const gameContainer = document.getElementById("game");
     const keyElement = document.getElementById("key");
-    const targetElement = document.getElementById("target");
+    const blocks = Array.from(document.querySelectorAll(".block"));
     const scoreElement = document.getElementById("current-score");
     const timerElement = document.getElementById("time-left");
 
@@ -11,47 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     startButton.addEventListener("click", function() {
         startButton.style.display = "none";
+        gameContainer.classList.remove("hidden");
         startGame();
     });
-
-    keyElement.addEventListener("mousedown", function(event) {
-        const initialX = event.clientX;
-        const initialY = event.clientY;
-        const initialLeft = keyElement.offsetLeft;
-        const initialTop = keyElement.offsetTop;
-
-        function onMouseMove(event) {
-            const deltaX = event.clientX - initialX;
-            const deltaY = event.clientY - initialY;
-            keyElement.style.left = `${initialLeft + deltaX}px`;
-            keyElement.style.top = `${initialTop + deltaY}px`;
-        }
-
-        function onMouseUp() {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-            checkCollision();
-        }
-
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-    });
-
-    function checkCollision() {
-        const keyRect = keyElement.getBoundingClientRect();
-        const targetRect = targetElement.getBoundingClientRect();
-        
-        if (
-            keyRect.left < targetRect.left + targetRect.width &&
-            keyRect.left + keyRect.width > targetRect.left &&
-            keyRect.top < targetRect.top + targetRect.height &&
-            keyRect.top + keyRect.height > targetRect.top
-        ) {
-            score += 100;
-            scoreElement.textContent = score;
-            // Move target to a new position or handle level completion
-        }
-    }
 
     function startGame() {
         timerElement.textContent = timeLeft;
@@ -63,6 +26,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 endGame();
             }
         }, 1000);
+    }
+
+    function moveKey(direction) {
+        // Define logic to move key based on the direction
+        // Check if the move is valid
+        // Update key position
+        // Check if the key reaches the end
+    }
+
+    function moveBlock(block, direction) {
+        // Define logic to move blocks based on the direction
+        // Check if the move is valid
+        // Update block position
+    }
+
+    function checkVictory() {
+        // Check if the key has reached the end
+        // Update score
     }
 
     function endGame() {
