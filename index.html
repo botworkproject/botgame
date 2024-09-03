@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Key Puzzle Game</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="game-container">
         <h1>Key Puzzle Game</h1>
-        <div id="grid">
-            <!-- Key -->
-            <div id="key" class="draggable"></div>
-            <!-- Blocks -->
-            <div id="block-horizontal" class="draggable horizontal"></div>
-            <div id="block-vertical" class="draggable vertical"></div>
-            <!-- Target -->
-            <div id="target"></div>
+        <button id="start-button">Start Game</button>
+        <div id="game" class="hidden">
+            <div id="game-board">
+                <div id="key" class="movable" draggable="true"></div>
+                <div class="block horizontal"></div>
+                <div class="block vertical"></div>
+                <!-- Add more blocks as needed -->
+            </div>
         </div>
-        <button id="reset-button">Reset Game</button>
     </div>
     <script src="script.js"></script>
 </body>
