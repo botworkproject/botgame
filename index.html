@@ -13,9 +13,20 @@
             <div id="game-board">
                 <img id="key" src="key.png" alt="Key">
                 <img id="lock" src="lock.png" alt="Lock">
-                <!-- Add obstacles and other elements here -->
+                <!-- Add obstacles here -->
+                <div class="obstacle" style="top: 100px; left: 200px; width: 100px; height: 30px;"></div>
+                <div class="obstacle" style="top: 300px; left: 400px; width: 30px; height: 100px;"></div>
+            </div>
+            <div id="score-timer">
+                <p id="score">Score: <span id="current-score">0</span></p>
+                <p id="timer">Time left: <span id="time-left">30</span>s</p>
             </div>
             <button id="start-button">Start Game</button>
+        </div>
+        <div id="game-over" class="hidden">
+            <h2>Game Over</h2>
+            <p>Your final score is <span id="final-score">0</span></p>
+            <button id="restart-button">Restart</button>
         </div>
     </div>
     <script src="script.js"></script>
