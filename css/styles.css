@@ -33,30 +33,21 @@ h1 {
     margin: 0 auto;
 }
 
-#key {
-    background: url('key.png') no-repeat center center;
-    background-size: contain;
+.cell {
+    position: relative;
     width: 100px;
     height: 100px;
-    grid-column: 1;
-    grid-row: 3;
-    z-index: 2;
 }
 
 .block {
-    background: url('block.png') no-repeat center center;
-    background-size: contain;
-    width: 100px;
-    height: 100px;
-    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
-.horizontal {
-    /* Define horizontal movement */
-}
-
-.vertical {
-    /* Define vertical movement */
+.key {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 button {
