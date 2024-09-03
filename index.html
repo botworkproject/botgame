@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Game</title>
+    <title>Key Puzzle Game</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="https://raw.githubusercontent.com/botworkproject/botgame/main/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div id="game-container">
-        <h1>Key Game</h1>
-        <button id="start-button">Start Game</button>
-        <div id="game" class="hidden">
-            <div id="key-lock-area">
-                <img id="key" src="key.png" alt="Key" draggable="true">
+        <h1>Key Puzzle Game</h1>
+        <div id="game">
+            <div id="game-board">
+                <img id="key" src="key.png" alt="Key">
                 <img id="lock" src="lock.png" alt="Lock">
+                <!-- Add obstacles and other elements here -->
             </div>
-            <p id="score">Score: <span id="current-score">0</span></p>
-            <p id="timer">Time left: <span id="time-left">30</span>s</p>
+            <button id="start-button">Start Game</button>
         </div>
     </div>
-    <audio id="background-music" src="https://raw.githubusercontent.com/botworkproject/botgame/main/music.mp3"></audio>
-    <audio id="success-sound" src="https://github.com/botworkproject/botgame/raw/main/success.wav></audio>
-    <script src="script.js"></script> 
+    <script src="script.js"></script>
 </body>
 </html>
