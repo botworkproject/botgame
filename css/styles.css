@@ -1,64 +1,47 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: url('https://raw.githubusercontent.com/botworkproject/botgame/main/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+document.addEventListener("DOMContentLoaded", function() {
+    const startButton = document.getElementById("start-button");
+    const keyElement = document.getElementById("key");
+    const lockElement = document.getElementById("lock");
+    const gameBoard = document.getElementById("game-board");
 
-#game-container {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-}
+    let isDragging = false;
 
-h1 {
-    margin-bottom: 20px;
-}
+    startButton.addEventListener("click", function() {
+        // Hide start button and show the game
+        startButton.style.display = "none";
+        gameBoard.style.cursor = "move";
 
-#key-lock-area {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 20px;
-}
+        // Make the key draggable
+        keyElement.addEventListener("mousedown", function(event) {
+            isDragging = true;
+            document.addEventListener("mousemove", moveKey);
+            document.addEventListener("mouseup", function() {
+                isDragging = false;
+                document.removeEventListener("mousemove", moveKey);
+            });
+        });
 
-#key {
-    width: 100px;
-    cursor: pointer;
-}
+        function moveKey(event) {
+            if (isDragging) {
+                keyElement.style.left = `${event.clientX - gameBoard.offsetLeft - keyElement.offsetWidth / 2}px`;
+                keyElement.style.top = `${event.clientY - gameBoard.offsetTop - keyElement.offsetHeight / 2}px`;
 
-#lock {
-    width: 100px;
-}
+                // Check for collision with the lock
+                if (checkCollision(keyElement, lockElement)) {
+                    alert("Congratulations! You found the lock!");
+                    // Optionally, reset or restart the game here
+                }
+            }
+        }
 
-button {
-    padding: 10px 20px;
-    margin-top: 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        function checkCollision(element1, element2) {
+            const rect1 = element1.getBoundingClientRect();
+            const rect2 = element2.getBoundingClientRect();
 
-button:hover {
-    background-color: #45a049;
-}
-
-.hidden {
-    display: none;
-}
-
-#timer, #score {
-    font-size: 18px;
-    margin-top: 10px;
-}
+            return !(rect1.right < rect2.left ||
+                     rect1.left > rect2.right ||
+                     rect1.bottom < rect2.top ||
+                     rect1.top > rect2.bottom);
+        }
+    });
+});
