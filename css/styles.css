@@ -2,32 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: url('https://raw.githubusercontent.com/botworkproject/botgame/main/background.jpg') no-repeat center center fixed;
+    background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-/* Ensure the buttons are visible */
-.option-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 5px;
-}
-
-.option-button:hover {
-    background-color: #45a049;
-}
-
 
 #game-container {
     text-align: center;
@@ -37,9 +18,24 @@ body {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
 
-#start-image {
-    width: 250px;
-    height: auto;
+h1 {
+    margin-bottom: 20px;
+}
+
+#key-lock-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#key {
+    width: 100px;
+    cursor: pointer;
+}
+
+#lock {
+    width: 100px;
 }
 
 button {
@@ -58,45 +54,8 @@ button:hover {
     background-color: #45a049;
 }
 
-input {
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    width: calc(100% - 22px);
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
 .hidden {
     display: none;
-}
-
-#flag {
-    width: 250px;
-    height: auto;
-    margin-top: 20px;
-}
-
-#options {
-    margin-top: 20px;
-}
-
-.option-button {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.option-button:hover {
-    background-color: #45a049;
 }
 
 #timer, #score {
