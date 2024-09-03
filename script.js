@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const gameGrid = document.getElementById("game-grid");
     const backgroundMusic = document.getElementById("background-music");
     const successSound = document.getElementById("success-sound");
-
+    const keyElement = document.querySelector('.key');
+    
     startButton.addEventListener("click", function() {
         startButton.style.display = "none";
         gameGrid.classList.remove("hidden");
@@ -18,23 +19,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initializeGrid() {
         // Logic to initialize grid with blocks
-        // For example, add event listeners to blocks for movement
+        // You will need to add logic to handle the movements of blocks and key
     }
 
-    // Function to move blocks horizontally or vertically
+    function moveKey(direction) {
+        // Logic to move the key horizontally
+        // Check if the move is valid and update the key's position
+    }
+
     function moveBlock(block, direction) {
-        // Logic to move the block based on direction and game rules
+        // Logic to move the blocks
+        // Ensure blocks move within the grid and don't overlap
     }
 
-    // Example: Moving the key to the right
-    function moveKeyRight() {
-        // Logic to move the key to the right
-    }
-
-    // Example: Moving the key to the left
-    function moveKeyLeft() {
-        // Logic to move the key to the left
-    }
-
-    // Add more movement functions and game logic as needed
+    // Add event listeners for key movements
+    document.addEventListener('keydown', function(event) {
+        switch(event.key) {
+            case 'ArrowLeft':
+                moveKey('left');
+                break;
+            case 'ArrowRight':
+                moveKey('right');
+                break;
+            // Add cases for other keys if needed
+        }
+    });
 });
