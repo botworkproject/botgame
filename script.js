@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("start-button");
+    const gameBoard = document.getElementById("game-board");
     const keyElement = document.getElementById("key");
     const lockElement = document.getElementById("lock");
-    const gameBoard = document.getElementById("game-board");
     const gameOverScreen = document.getElementById("game-over");
     const finalScoreElement = document.getElementById("final-score");
     const restartButton = document.getElementById("restart-button");
@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
     startButton.addEventListener("click", function() {
         startButton.style.display = "none";
         gameOverScreen.classList.add("hidden");
+        gameBoard.classList.remove("hidden");
         gameBoard.style.cursor = "move";
 
-        // Make the key draggable
         keyElement.addEventListener("mousedown", function(event) {
             isDragging = true;
             document.addEventListener("mousemove", moveKey);
