@@ -1,4 +1,4 @@
-body {
+        body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -19,46 +19,33 @@ body {
     position: relative;
 }
 
-h1 {
-    margin-bottom: 20px;
-}
-
 #game-board {
     position: relative;
-    width: 600px; /* Adjust as needed */
-    height: 400px; /* Adjust as needed */
-    background: #e0e0e0; /* Lighter background for the game area */
-    border: 3px solid #333; /* Darker border for better visibility */
-    border-radius: 10px;
-    overflow: hidden;
+    width: 400px;
+    height: 400px;
+    background: url('grid.png') no-repeat center center;
+    background-size: cover;
     margin: 0 auto;
+    border: 2px solid #000;
 }
 
 #key, #lock {
-    width: 50px;
     position: absolute;
-    transition: transform 0.2s ease; /* Smooth movement */
+    width: 50px;
+    height: 50px;
 }
 
 #key {
+    background: url('key.png') no-repeat center center;
+    background-size: contain;
     cursor: pointer;
 }
 
 #lock {
-    /* Position lock at a fixed location */
-    top: 350px;
-    left: 550px;
-}
-
-.obstacle {
-    background: #444; /* Dark color for obstacles */
-    position: absolute;
-    border-radius: 5px; /* Rounded corners for obstacles */
-}
-
-#score-timer {
-    margin: 20px 0;
-    font-size: 18px;
+    background: url('lock.png') no-repeat center center;
+    background-size: contain;
+    bottom: 0;
+    right: 0;
 }
 
 button {
@@ -81,25 +68,11 @@ button:hover {
     display: none;
 }
 
+#timer, #score {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
 #game-over {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-#game-over h2 {
-    margin-bottom: 10px;
-}
-
-#restart-button {
-    background-color: #f44336;
-}
-
-#restart-button:hover {
-    background-color: #e53935;
+    text-align: center;
 }
