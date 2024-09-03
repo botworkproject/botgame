@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let timeLeft = 30;
     let timer;
 
+    // Debugging: Check if elements are being accessed
     console.log("Start Button:", startButton);
     console.log("Game Container:", gameContainer);
     console.log("Key Element:", keyElement);
@@ -49,7 +50,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function startGame() {
         console.log("Game Started");
-        backgroundMusic.play();
+        // Check if background music starts playing
+        if (backgroundMusic) {
+            backgroundMusic.play().catch(e => console.error("Error playing background music:", e));
+        }
         startTimer();
     }
 
@@ -71,7 +75,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        backgroundMusic.pause();
+        if (backgroundMusic) {
+            backgroundMusic.pause();
+        }
         alert("Game over! Your score is " + score);
         location.reload();
     }
