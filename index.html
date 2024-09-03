@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Key Puzzle Game</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div id="game-container">
         <h1>Key Puzzle Game</h1>
-        <button id="start-button">Start Game</button>
-        <div id="game-grid" class="hidden">
-            <!-- Example grid cells -->
-            <div class="cell"><img src="horizon.png" alt="Horizontal Block" class="block horizontal"></div>
-            <div class="cell"><img src="vertical.png" alt="Vertical Block" class="block vertical"></div>
-            <!-- Add more cells as needed -->
-            <div class="cell"><img src="key.png" alt="Key" class="key"></div>
+        <div id="grid">
+            <!-- Key -->
+            <div id="key" class="draggable"></div>
+            <!-- Blocks -->
+            <div id="block-horizontal" class="draggable horizontal"></div>
+            <div id="block-vertical" class="draggable vertical"></div>
+            <!-- Target -->
+            <div id="target"></div>
         </div>
+        <button id="reset-button">Reset Game</button>
     </div>
-    <audio id="background-music" src="https://github.com/botworkproject/botgame/raw/main/music.mp3"></audio>
-    <audio id="success-sound" src="https://github.com/botworkproject/botgame/raw/main/success.wav"></audio>
     <script src="script.js"></script>
 </body>
 </html>
