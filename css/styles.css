@@ -22,27 +22,41 @@ h1 {
     margin-bottom: 20px;
 }
 
-#game-board {
+#game-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: repeat(5, 100px);
+    gap: 2px;
     position: relative;
-    width: 400px;
-    height: 400px;
-    border: 2px solid #333;
-    background: #eee;
+    width: 510px; /* Grid width including gaps */
+    height: 510px; /* Grid height including gaps */
     margin: 0 auto;
 }
 
 #key {
-    position: absolute;
-    width: 50px;
-    cursor: pointer;
+    background: url('key.png') no-repeat center center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    grid-column: 1;
+    grid-row: 3;
+    z-index: 2;
 }
 
-#target {
+.block {
+    background: url('block.png') no-repeat center center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background: red;
-    /* Add positioning for target */
+}
+
+.horizontal {
+    /* Define horizontal movement */
+}
+
+.vertical {
+    /* Define vertical movement */
 }
 
 button {
@@ -59,6 +73,10 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.hidden {
+    display: none;
 }
 
 #timer, #score {
