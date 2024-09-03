@@ -12,13 +12,22 @@ document.addEventListener("DOMContentLoaded", function() {
     let timeLeft = 30;
     let timer;
 
+    console.log("Start Button:", startButton);
+    console.log("Game Container:", gameContainer);
+    console.log("Key Element:", keyElement);
+    console.log("Lock Element:", lockElement);
+    console.log("Background Music:", backgroundMusic);
+    console.log("Success Sound:", successSound);
+
     startButton.addEventListener("click", function() {
+        console.log("Start Button Clicked");
         startButton.style.display = "none";
         gameContainer.classList.remove("hidden");
         startGame();
     });
 
     keyElement.addEventListener("dragstart", function(event) {
+        console.log("Key Drag Started");
         event.dataTransfer.setData("text", "key");
     });
 
@@ -29,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     lockElement.addEventListener("drop", function(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData("text");
+        console.log("Dropped Data:", data);
         if (data === "key") {
             score += 100;
             scoreElement.textContent = score;
@@ -38,12 +48,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function startGame() {
+        console.log("Game Started");
         backgroundMusic.play();
         startTimer();
     }
 
     function loadNewLevel() {
         // Logic to increase difficulty, move key and lock positions, etc.
+        console.log("New Level Loaded");
     }
 
     function startTimer() {
