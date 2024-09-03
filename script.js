@@ -1,56 +1,73 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const key = document.getElementById('key');
-    const blocks = document.querySelectorAll('.draggable');
-    const target = document.getElementById('target');
-    const grid = document.getElementById('grid');
-    const resetButton = document.getElementById('reset-button');
+document.addEventListener("DOMContentLoaded", function() {
+    const startButton = document.getElementById("start-button");
+    const gameContainer = document.getElementById("game");
+    const keyElement = document.getElementById("key");
+    const blocks = document.querySelectorAll(".block");
 
-    let activeBlock = null;
-    let offsetX, offsetY;
+    let keyX = 0;
+    let keyY = 0;
 
-    blocks.forEach(block => {
-        block.addEventListener('mousedown', (e) => {
-            activeBlock = block;
-            offsetX = e.clientX - block.getBoundingClientRect().left;
-            offsetY = e.clientY - block.getBoundingClientRect().top;
-            document.addEventListener('mousemove', moveBlock);
-            document.addEventListener('mouseup', () => {
-                document.removeEventListener('mousemove', moveBlock);
-                activeBlock = null;
-            });
-        });
+    startButton.addEventListener("click", function() {
+        startButton.style.display = "none";
+        gameContainer.classList.remove("hidden");
+        startGame();
     });
 
-    function moveBlock(e) {
-        if (activeBlock) {
-            const x = e.clientX - offsetX - grid.getBoundingClientRect().left;
-            const y = e.clientY - offsetY - grid.getBoundingClientRect().top;
-            activeBlock.style.left = `${Math.max(0, Math.min(x, grid.clientWidth - activeBlock.clientWidth))}px`;
-            activeBlock.style.top = `${Math.max(0, Math.min(y, grid.clientHeight - activeBlock.clientHeight))}px`;
-        }
-    }
+    function startGame() {
+        // Set up the initial game state
+        keyX = 0;
+        keyY = 0;
+        keyElement.style.left = `${keyX}px`;
+        keyElement.style.top = `${keyY}px`;
 
-    resetButton.addEventListener('click', () => {
-        // Reset positions of the key and blocks
-        key.style.left = '0px';
-        key.style.top = '0px';
         blocks.forEach(block => {
-            block.style.left = '';
-            block.style.top = '';
+            block.addEventListener("mousedown", function(e) {
+                let shiftX = e.clientX - block.getBoundingClientRect().left;
+                let shiftY = e.clientY - block.getBoundingClientRect().top;
+
+                function moveAt(pageX, pageY) {
+                    block.style.left = pageX - shiftX + 'px';
+                    block.style.top = pageY - shiftY + 'px';
+                }
+
+                function onMouseMove(e) {
+                    moveAt(e.pageX, e.pageY);
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+
+                block.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    block.onmouseup = null;
+                };
+            });
+
+            block.ondragstart = function() {
+                return false;
+            };
         });
-    });
 
-    // Check if the key reaches the target
-    function checkWin() {
-        const keyRect = key.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        if (keyRect.left < targetRect.right &&
-            keyRect.right > targetRect.left &&
-            keyRect.top < targetRect.bottom &&
-            keyRect.bottom > targetRect.top) {
-            alert('You win!');
-        }
+        keyElement.addEventListener("dragstart", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            switch(e.code) {
+                case "ArrowLeft":
+                    keyX = Math.max(0, keyX - 10);
+                    break;
+                case "ArrowRight":
+                    keyX = Math.min(gameContainer.offsetWidth - keyElement.offsetWidth, keyX + 10);
+                    break;
+                case "ArrowUp":
+                    keyY = Math.max(0, keyY - 10);
+                    break;
+                case "ArrowDown":
+                    keyY = Math.min(gameContainer.offsetHeight - keyElement.offsetHeight, keyY + 10);
+                    break;
+            }
+            keyElement.style.left = `${keyX}px`;
+            keyElement.style.top = `${keyY}px`;
+        });
     }
-
-    document.addEventListener('mouseup', checkWin);
 });
