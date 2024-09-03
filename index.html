@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamster Key Game</title>
+    <title>Key Puzzle Game</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div id="game-container">
-        <h1>Hamster Key Game</h1>
+        <h1>Key Puzzle Game</h1>
         <button id="start-button">Start Game</button>
-        <div id="game" class="hidden">
-            <div id="game-grid">
-                <div id="key"></div>
-                <div class="block horizontal"></div>
-                <div class="block vertical"></div>
-                <!-- Add more blocks here -->
+        <div id="game-grid" class="hidden">
+            <!-- Example grid cells -->
+            <div class="cell">
+                <img src="horizon.png" alt="Horizontal Block" class="block">
             </div>
-            <p id="score">Score: <span id="current-score">0</span></p>
-            <p id="timer">Time left: <span id="time-left">30</span>s</p>
+            <div class="cell">
+                <img src="vertical.png" alt="Vertical Block" class="block">
+            </div>
+            <!-- Add more cells as needed -->
+            <div class="cell">
+                <img src="key.png" alt="Key" class="key">
+            </div>
         </div>
     </div>
+    <audio id="background-music" src="https://github.com/botworkproject/botgame/raw/main/music.mp3"></audio>
+    <audio id="success-sound" src="https://github.com/botworkproject/botgame/raw/main/success.wav"></audio>
     <script src="script.js"></script>
 </body>
 </html>
