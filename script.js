@@ -1,82 +1,72 @@
 document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("start-button");
-    const gameBoard = document.getElementById("game-board");
     const keyElement = document.getElementById("key");
-    const lockElement = document.getElementById("lock");
-    const gameOverScreen = document.getElementById("game-over");
-    const finalScoreElement = document.getElementById("final-score");
-    const restartButton = document.getElementById("restart-button");
+    const targetElement = document.getElementById("target");
     const scoreElement = document.getElementById("current-score");
     const timerElement = document.getElementById("time-left");
 
     let score = 0;
     let timeLeft = 30;
     let timer;
-    let isDragging = false;
 
     startButton.addEventListener("click", function() {
         startButton.style.display = "none";
-        gameOverScreen.classList.add("hidden");
-        gameBoard.classList.remove("hidden");
-        gameBoard.style.cursor = "move";
+        startGame();
+    });
 
-        keyElement.addEventListener("mousedown", function(event) {
-            isDragging = true;
-            document.addEventListener("mousemove", moveKey);
-            document.addEventListener("mouseup", function() {
-                isDragging = false;
-                document.removeEventListener("mousemove", moveKey);
-            });
-        });
+    keyElement.addEventListener("mousedown", function(event) {
+        const initialX = event.clientX;
+        const initialY = event.clientY;
+        const initialLeft = keyElement.offsetLeft;
+        const initialTop = keyElement.offsetTop;
 
-        function moveKey(event) {
-            if (isDragging) {
-                keyElement.style.left = `${event.clientX - gameBoard.offsetLeft - keyElement.offsetWidth / 2}px`;
-                keyElement.style.top = `${event.clientY - gameBoard.offsetTop - keyElement.offsetHeight / 2}px`;
-
-                // Check for collision with the lock
-                if (checkCollision(keyElement, lockElement)) {
-                    score += 100;
-                    scoreElement.textContent = score;
-                    alert("Congratulations! You found the lock!");
-                    endGame();
-                }
-            }
+        function onMouseMove(event) {
+            const deltaX = event.clientX - initialX;
+            const deltaY = event.clientY - initialY;
+            keyElement.style.left = `${initialLeft + deltaX}px`;
+            keyElement.style.top = `${initialTop + deltaY}px`;
         }
 
-        function checkCollision(element1, element2) {
-            const rect1 = element1.getBoundingClientRect();
-            const rect2 = element2.getBoundingClientRect();
-
-            return !(rect1.right < rect2.left ||
-                     rect1.left > rect2.right ||
-                     rect1.bottom < rect2.top ||
-                     rect1.top > rect2.bottom);
+        function onMouseUp() {
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+            checkCollision();
         }
 
-        function startTimer() {
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+    });
+
+    function checkCollision() {
+        const keyRect = keyElement.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+        
+        if (
+            keyRect.left < targetRect.left + targetRect.width &&
+            keyRect.left + keyRect.width > targetRect.left &&
+            keyRect.top < targetRect.top + targetRect.height &&
+            keyRect.top + keyRect.height > targetRect.top
+        ) {
+            score += 100;
+            scoreElement.textContent = score;
+            // Move target to a new position or handle level completion
+        }
+    }
+
+    function startGame() {
+        timerElement.textContent = timeLeft;
+        timer = setInterval(function() {
+            timeLeft--;
             timerElement.textContent = timeLeft;
-            timer = setInterval(function() {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-                if (timeLeft === 0) {
-                    clearInterval(timer);
-                    endGame();
-                }
-            }, 1000);
-        }
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                endGame();
+            }
+        }, 1000);
+    }
 
-        function endGame() {
-            clearInterval(timer);
-            gameBoard.style.cursor = "default";
-            gameOverScreen.classList.remove("hidden");
-            finalScoreElement.textContent = score;
-        }
-
-        startTimer();
-    });
-
-    restartButton.addEventListener("click", function() {
+    function endGame() {
+        alert("Game over! Your score is " + score);
         location.reload();
-    });
+    }
 });
