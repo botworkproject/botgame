@@ -9,15 +9,16 @@
 <body>
     <div id="game-container">
         <h1>Key Puzzle Game</h1>
-        <button id="start-button">Start Game</button>
-        <div id="game" class="hidden">
-            <div id="game-board">
-                <div id="key" class="movable" draggable="true"></div>
-                <div class="block horizontal"></div>
-                <div class="block vertical"></div>
-                <!-- Add more blocks as needed -->
-            </div>
+        <div id="game-board">
+            <!-- Blocks -->
+            <div class="block horizontal" id="block1"></div>
+            <div class="block vertical" id="block2"></div>
+            <div class="block horizontal" id="block3"></div>
+            <div class="block vertical" id="block4"></div>
+            <!-- Key -->
+            <div id="key"></div>
         </div>
+        <button id="start-button">Start Game</button>
     </div>
     <script src="script.js"></script>
 </body>
