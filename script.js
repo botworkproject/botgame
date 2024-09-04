@@ -1,64 +1,35 @@
-// script.js
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("start-button");
     const gameBoard = document.getElementById("game-board");
-    const key = document.getElementById("key");
-
-    let isDragging = false;
-    let draggedElement = null;
-
-    // Initialize block positions
-    const blockPositions = {
-        block1: { top: 50, left: 50 },
-        block2: { top: 150, left: 200 },
-        block3: { top: 250, left: 50 },
-        block4: { top: 200, left: 300 },
-    };
-
-    function updateBlockPositions() {
-        Object.keys(blockPositions).forEach(blockId => {
-            const block = document.getElementById(blockId);
-            block.style.top = `${blockPositions[blockId].top}px`;
-            block.style.left = `${blockPositions[blockId].left}px`;
-        });
-    }
+    const scoreElement = document.getElementById("current-score");
+    
+    let score = 0;
+    let blocks = [];
+    
+    startButton.addEventListener("click", startGame);
 
     function startGame() {
-        startButton.style.display = "none";
-        key.style.top = "0px";
-        key.style.left = "0px";
-        updateBlockPositions();
+        score = 0;
+        scoreElement.textContent = score;
+        gameBoard.innerHTML = ''; // Clear previous game content
+        createBlocks();
     }
 
-    function handleMouseDown(event) {
-        if (event.target.classList.contains("block")) {
-            isDragging = true;
-            draggedElement = event.target;
-            draggedElement.style.zIndex = 1000;
+    function createBlocks() {
+        // Example blocks for demonstration
+        for (let i = 0; i < 5; i++) {
+            const block = document.createElement('div');
+            block.className = 'block';
+            block.style.width = '50px';
+            block.style.height = '50px';
+            block.style.background = 'red';
+            block.style.position = 'absolute';
+            block.style.left = `${Math.random() * (gameBoard.offsetWidth - 50)}px`;
+            block.style.top = `${Math.random() * (gameBoard.offsetHeight - 50)}px`;
+            gameBoard.appendChild(block);
+            blocks.push(block);
         }
     }
 
-    function handleMouseMove(event) {
-        if (isDragging && draggedElement) {
-            const rect = gameBoard.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            draggedElement.style.left = `${x - draggedElement.offsetWidth / 2}px`;
-            draggedElement.style.top = `${y - draggedElement.offsetHeight / 2}px`;
-        }
-    }
-
-    function handleMouseUp() {
-        if (isDragging && draggedElement) {
-            isDragging = false;
-            draggedElement.style.zIndex = "";
-            draggedElement = null;
-        }
-    }
-
-    startButton.addEventListener("click", startGame);
-    gameBoard.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    // Add more game logic here
 });
